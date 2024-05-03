@@ -1,0 +1,51 @@
+/*
+   Fundacion Kinal
+   Centro educativo tecnico laboral Kinal
+   Quinto perito
+   Quinto electronica
+   Codigo Tecnico: EB5AM 
+   Curso: Taller de electronica digital y reparacion de computadoras I
+   Proyecto: "Contador del 0 a 99"
+   Dev: Alvaro Angel Gabriel Estrada Morales
+   Fecha: 2 de Mayo de 2024
+*/
+
+
+int contador = 0;
+
+void setup() {
+  Serial.begin(9600);
+  
+  // Pines que utilizaremos 
+  pinMode(2, INPUT_PULLUP);  // Pin para el interruptor de Suma
+  pinMode(3, INPUT_PULLUP);  // Pin para el interruptor de Resta
+}
+
+void loop() {
+  // Verificar si el interruptor de incremento ha sido presionado
+  if (digitalRead(2) == LOW) {
+    // Le suma al contador si el valor es menor a 99
+    if (contador < 99) {
+      contador++;
+      delay(200);  
+    } else {
+      contador = 0;  // Reiniciar el contador si alcanza 99
+    }
+  }
+  
+  // Verificar si el interruptor de Resta ha sido presionado
+  if (digitalRead(3) == LOW) {
+    // Restar el contador si el valor es mayor a 0
+    if (contador > 0) {
+      contador--;
+      delay(200); 
+    } else {
+      contador = 99;  // Establecer el contador en 99 si está en 0
+    }
+  }
+  
+  // Mostrar el valor del contador en el monitor serial
+  Serial.println(contador);
+  
+  delay(100);  // Pequeña pausa para evitar la lectura rápida de los interruptores
+}
